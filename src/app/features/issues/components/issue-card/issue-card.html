@@ -1,0 +1,78 @@
+<div
+  class="group bg-white border border-gray-200 rounded-lg p-3 mb-2 transition-all duration-200 min-w-[200px] sm:mb-3 sm:min-w-[250px]"
+  [class.cursor-grab]="!isDraggedItem()"
+  [class.cursor-grabbing]="isDraggedItem()"
+  [class.opacity-50]="isDraggedItem()"
+  [class.rotate-1]="isDraggedItem()"
+  [class.z-50]="isDraggedItem()"
+  [class.scale-105]="isDraggedItem()"
+  [class.shadow-xl]="isDraggedItem()"
+  [class.ring-2]="isDraggedItem()"
+  [class.ring-primary-500]="isDraggedItem()"
+  [class.hover:shadow-md]="!isDraggedItem()"
+  [class.hover:border-gray-400]="!isDraggedItem()"
+  draggable="true"
+  (dragstart)="onDragStart($event)"
+  (dragend)="onDragEnd()"
+>
+  <div class="flex justify-between items-center mb-2">
+    <span class="font-semibold text-primary-500 text-xs sm:text-sm"
+      >#{{ issue().gitlabId }}</span
+    >
+    <div
+      class="flex gap-1 opacity-60 transition-opacity duration-200 group-hover:opacity-100"
+    >
+      <button
+        class="bg-transparent border-0 p-1 rounded cursor-pointer text-gray-500 transition-colors duration-200 flex items-center justify-center min-w-[28px] min-h-[28px] text-xs hover:bg-gray-50 hover:text-gray-600 sm:min-w-[24px] sm:min-h-[24px]"
+        (click)="viewInGitlab()"
+        title="View in GitLab"
+        type="button"
+      >
+        🔗
+      </button>
+    </div>
+  </div>
+
+  <h5
+    class="text-sm font-semibold text-gray-800 leading-tight m-0 mb-2 sm:text-base"
+  >
+    {{ issue().title }}
+  </h5>
+  <p
+    class="text-xs text-gray-500 leading-normal overflow-hidden text-ellipsis m-0 mb-3 sm:text-sm"
+    style="
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    "
+  >
+    {{ issue().description }}
+  </p>
+
+  <div class="flex flex-wrap gap-1 mb-2 sm:mb-3">
+    <span
+      class="py-1 px-2 rounded text-xs font-medium uppercase"
+      [class]="{
+        'bg-blue-100 text-blue-800': issue().priority === 'low',
+        'bg-yellow-100 text-yellow-800': issue().priority === 'medium',
+        'bg-red-100 text-red-800': issue().priority === 'high',
+        'bg-red-200 text-red-900 animate-pulse':
+          issue().priority === 'critical',
+      }"
+    >
+      {{ issue().priority }}
+    </span>
+    @for (label of issue().labels; track label) {
+      <span class="bg-gray-200 text-gray-700 py-0.5 px-2 rounded text-xs">{{
+        label
+      }}</span>
+    }
+  </div>
+
+  <div
+    class="flex flex-col gap-1 text-xs text-gray-500 sm:flex-row sm:justify-between sm:items-center"
+  >
+    <small class="font-medium">{{ issue().author }}</small>
+    <small>{{ issue().createdAt | date: "shortDate" }}</small>
+  </div>
+</div>

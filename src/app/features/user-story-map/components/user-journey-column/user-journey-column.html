@@ -1,0 +1,90 @@
+<div
+  class="group flex flex-col h-full bg-gray-50 rounded-lg border border-gray-200 w-[280px] flex-shrink-0 hover:border-gray-400 transition-colors duration-200 sm:w-[350px]"
+>
+  <div
+    class="flex justify-between items-center p-3 border-b border-gray-200 bg-white rounded-t-lg sm:p-4"
+  >
+    <h3
+      class="text-base font-semibold text-gray-800 flex-1 m-0 sm:text-lg"
+      [title]="journey().description || journey().title"
+    >
+      {{ journey().title }}
+    </h3>
+    <div class="flex items-center gap-2">
+      <span
+        class="bg-gray-500 text-white py-1 px-2 rounded-full text-xs font-medium min-w-[1.2rem] text-center sm:min-w-[1.5rem]"
+        >{{ sortedSteps().length }}</span
+      >
+      <div
+        class="flex gap-1 opacity-60 transition-opacity duration-200 group-hover:opacity-100"
+      >
+        <button
+          class="bg-transparent border-0 p-1 rounded cursor-pointer text-gray-500 transition-colors duration-200 flex items-center justify-center min-w-[28px] min-h-[28px] text-xs hover:bg-gray-50 hover:text-gray-600 sm:min-w-[24px] sm:min-h-[24px]"
+          (click)="editJourney()"
+          title="Edit Journey"
+          type="button"
+        >
+          ✏️
+        </button>
+        <button
+          class="bg-transparent border-0 p-1 rounded cursor-pointer text-gray-500 transition-colors duration-200 flex items-center justify-center min-w-[28px] min-h-[28px] text-xs hover:bg-red-50 hover:text-red-500 sm:min-w-[24px] sm:min-h-[24px]"
+          (click)="onDeleteJourney()"
+          title="Delete Journey"
+          type="button"
+        >
+          🗑️
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-3 border-b border-gray-200 bg-white sm:p-4">
+    <button
+      class="btn btn-primary w-full text-sm"
+      (click)="showAddStepDialog()"
+      [disabled]="loading()"
+      type="button"
+    >
+      + Add Step
+    </button>
+  </div>
+
+  <div class="flex-1 p-3 overflow-y-auto sm:p-4 gap-3 flex flex-col">
+    @if (sortedSteps().length === 0) {
+      <div
+        class="flex flex-col items-center justify-center py-6 px-3 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-lg bg-white sm:py-8 sm:px-4"
+      >
+        <p class="text-sm font-medium m-0 mb-2 sm:text-base">No steps yet</p>
+        <small class="text-xs opacity-80 sm:text-sm"
+          >Click "Add Step" above to get started</small
+        >
+      </div>
+    } @else {
+      @for (step of sortedSteps(); track step.id) {
+        <app-user-step-card
+          [step]="step"
+          (updateStep)="onUpdateStep($event)"
+          (deleteStep)="onDeleteStep($event)"
+        />
+      }
+    }
+  </div>
+
+  <!-- Add Step Modal -->
+  @if (showAddStep()) {
+    <app-add-step-modal
+      [journeyId]="journey().id"
+      (submitStep)="submitAddStep($event)"
+      (cancelModal)="cancelAddStep()"
+    />
+  }
+
+  <!-- Edit Journey Modal -->
+  @if (showEditJourney()) {
+    <app-edit-journey-modal
+      [journey]="editingJourney()"
+      (submitJourney)="submitEditJourney($event)"
+      (cancelModal)="cancelEditJourney()"
+    />
+  }
+</div>

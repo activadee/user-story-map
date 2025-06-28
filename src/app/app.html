@@ -1,0 +1,38 @@
+<header class="bg-gray-50 border-b border-gray-200">
+  <div class="container py-3 sm:py-4">
+    <div
+      class="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center"
+    >
+      <h1 class="text-xl font-semibold text-gray-800 m-0 sm:text-2xl">
+        {{ title }}
+      </h1>
+      <nav class="flex flex-col gap-2 sm:flex-row sm:gap-4">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="py-2 px-4 no-underline text-gray-500 rounded-md transition-colors duration-200 hover:text-gray-600 hover:bg-gray-200 text-center sm:text-left [&.active]:text-primary-500 [&.active]:bg-blue-50"
+          >Story Map</a
+        >
+        <a
+          routerLink="/releases"
+          routerLinkActive="active"
+          class="py-2 px-4 no-underline text-gray-500 rounded-md transition-colors duration-200 hover:text-gray-600 hover:bg-gray-200 text-center sm:text-left [&.active]:text-primary-500 [&.active]:bg-blue-50"
+          >Releases</a
+        >
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="flex-1">
+  <router-outlet />
+</main>
+
+<footer class="bg-gray-50 border-t border-gray-200">
+  <div class="container py-3 sm:py-4 text-center">
+    <p class="text-xs text-gray-500 m-0 sm:text-sm">
+      &copy; 2024 User Story Map - Angular Challenge
+    </p>
+  </div>
+</footer>

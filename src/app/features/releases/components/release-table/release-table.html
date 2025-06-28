@@ -1,0 +1,184 @@
+<div class="container py-6 sm:py-8">
+  <app-page-header
+    title="Release Planning"
+    subtitle="Plan and manage your product releases"
+  >
+    <button
+      class="btn btn-primary"
+      (click)="showCreateReleaseDialog()"
+      type="button"
+    >
+      + New Release
+    </button>
+  </app-page-header>
+
+  @if (releaseService.loading()) {
+    <div
+      class="flex flex-col items-center justify-center py-12 text-gray-500 sm:py-16"
+    >
+      <div
+        class="w-8 h-8 border-4 border-gray-200 border-t-primary-500 rounded-full animate-spin mb-3 sm:w-10 sm:h-10 sm:mb-4"
+      ></div>
+      <p class="text-sm m-0 sm:text-base">Loading releases...</p>
+    </div>
+  } @else {
+    <div
+      class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-x-auto mt-4 sm:mt-6"
+    >
+      <table class="w-full border-collapse min-w-[600px] sm:min-w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="py-3 px-3 text-left font-semibold text-gray-600 border-b-2 border-gray-200 text-xs sm:py-4 sm:px-4 sm:text-sm"
+            >
+              Release Name
+            </th>
+            <th
+              class="py-3 px-3 text-left font-semibold text-gray-600 border-b-2 border-gray-200 text-xs sm:py-4 sm:px-4 sm:text-sm"
+            >
+              Description
+            </th>
+            <th
+              class="py-3 px-3 text-left font-semibold text-gray-600 border-b-2 border-gray-200 text-xs sm:py-4 sm:px-4 sm:text-sm"
+            >
+              Count
+            </th>
+            <th
+              class="py-3 px-3 text-left font-semibold text-gray-600 border-b-2 border-gray-200 text-xs sm:py-4 sm:px-4 sm:text-sm"
+            >
+              Issues
+            </th>
+            <th
+              class="py-3 px-3 text-left font-semibold text-gray-600 border-b-2 border-gray-200 text-xs sm:py-4 sm:px-4 sm:text-sm"
+            >
+              Created
+            </th>
+            <th
+              class="py-3 px-3 text-left font-semibold text-gray-600 border-b-2 border-gray-200 text-xs sm:py-4 sm:px-4 sm:text-sm"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (tableData().length === 0) {
+            <tr>
+              <td colspan="6" class="py-8 text-center sm:py-12">
+                <div class="flex flex-col items-center gap-2 text-gray-500">
+                  <span class="text-3xl opacity-60 mb-2 sm:text-4xl">📅</span>
+                  <p class="text-sm font-medium m-0 sm:text-base">
+                    No releases created yet
+                  </p>
+                  <small class="text-xs opacity-80 sm:text-sm"
+                    >Create your first release to start planning</small
+                  >
+                </div>
+              </td>
+            </tr>
+          } @else {
+            @for (row of tableData(); track row.release.id) {
+              <tr
+                class="transition-colors duration-200 hover:bg-gray-50 border-b border-gray-200 last:border-b-0"
+              >
+                <td
+                  class="py-3 px-3 align-top min-w-[120px] sm:py-4 sm:px-4 sm:min-w-[200px]"
+                >
+                  <strong class="text-gray-800 text-xs sm:text-sm">{{
+                    row.release.name
+                  }}</strong>
+                </td>
+                <td
+                  class="py-3 px-3 align-top max-w-[200px] text-xs text-gray-500 leading-normal sm:py-4 sm:px-4 sm:max-w-[300px] sm:text-sm"
+                >
+                  {{ row.release.description || "-" }}
+                </td>
+                <td class="py-3 px-3 align-top text-center sm:py-4 sm:px-4">
+                  <span
+                    class="bg-primary-500 text-white py-1 px-2 rounded-full text-xs font-medium min-w-[1.2rem] inline-block sm:min-w-[1.5rem]"
+                    >{{ row.issueCount }}</span
+                  >
+                </td>
+                <td
+                  class="py-3 px-3 align-top max-w-[250px] sm:py-4 sm:px-4 sm:max-w-[400px]"
+                >
+                  @if (row.assignedIssues.length === 0) {
+                    <em class="text-gray-500 text-xs sm:text-sm"
+                      >No issues assigned</em
+                    >
+                  } @else {
+                    <div class="flex flex-col gap-1 sm:gap-2">
+                      @for (issue of row.assignedIssues; track issue.id) {
+                        <div
+                          class="flex justify-between items-center py-1 px-2 bg-gray-50 rounded-md text-xs sm:py-2 sm:text-sm"
+                        >
+                          <span
+                            class="flex-1 text-gray-600 truncate mr-2"
+                            [title]="issue.description"
+                          >
+                            #{{ issue.gitlabId }} {{ issue.title }}
+                          </span>
+                          <button
+                            class="bg-transparent border-0 text-gray-500 cursor-pointer p-1 rounded-sm text-xs transition-colors duration-200 hover:bg-gray-200 hover:text-red-500 min-w-[24px] min-h-[24px] sm:min-w-[28px] sm:min-h-[28px]"
+                            (click)="unassignIssue(issue)"
+                            title="Unassign from release"
+                            type="button"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      }
+                    </div>
+                  }
+                </td>
+                <td
+                  class="py-3 px-3 align-top text-xs text-gray-500 whitespace-nowrap sm:py-4 sm:px-4 sm:text-sm"
+                >
+                  {{ row.release.createdAt | date: "shortDate" }}
+                </td>
+                <td
+                  class="py-3 px-3 align-top whitespace-nowrap sm:py-4 sm:px-4"
+                >
+                  <div class="flex gap-1">
+                    <button
+                      class="bg-transparent border-0 p-1 rounded cursor-pointer text-gray-500 transition-colors duration-200 flex items-center justify-center min-w-[32px] min-h-[32px] text-sm hover:bg-gray-50 hover:text-gray-600 focus:outline-none focus:bg-gray-50 sm:min-w-[28px] sm:min-h-[28px]"
+                      (click)="editRelease(row.release)"
+                      title="Edit Release"
+                      type="button"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      class="bg-transparent border-0 p-1 rounded cursor-pointer text-gray-500 transition-colors duration-200 flex items-center justify-center min-w-[32px] min-h-[32px] text-sm hover:bg-red-50 hover:text-red-500 focus:outline-none focus:bg-red-50 sm:min-w-[28px] sm:min-h-[28px]"
+                      (click)="deleteRelease(row.release)"
+                      title="Delete Release"
+                      type="button"
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <!-- Create Release Modal -->
+  @if (showCreateDialog()) {
+    <app-create-release-modal
+      (submitRelease)="submitCreate($event)"
+      (cancelModal)="cancelCreate()"
+    />
+  }
+
+  <!-- Edit Release Modal -->
+  @if (editingRelease()) {
+    <app-edit-release-modal
+      [release]="editingRelease()"
+      (submitRelease)="submitEdit($event)"
+      (cancelModal)="cancelEdit()"
+    />
+  }
+</div>

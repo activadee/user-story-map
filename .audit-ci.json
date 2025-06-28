@@ -1,0 +1,11 @@
+{
+  "allowlist": [],
+  "low": true,
+  "moderate": true,
+  "high": false,
+  "critical": false,
+  "report-type": "full",
+  "advisories": [],
+  "whitelist": [],
+  "modules": []
+}

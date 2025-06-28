@@ -1,0 +1,42 @@
+<div
+  class="flex flex-col h-full bg-gray-50 rounded-lg border border-gray-200 min-w-[250px] max-w-[300px] hover:border-gray-400 transition-colors duration-200 sm:min-w-[300px] sm:max-w-[350px]"
+>
+  <div
+    class="flex justify-between items-center p-3 border-b border-gray-200 bg-white rounded-t-lg sm:p-4"
+  >
+    <h3 class="text-base font-semibold text-gray-800 m-0 sm:text-lg">
+      Unassigned Issues
+    </h3>
+    <span
+      class="bg-gray-500 text-white py-1 px-2 rounded-full text-xs font-medium min-w-[1.2rem] text-center sm:min-w-[1.5rem]"
+      >{{ issueService.unassignedIssues().length }}</span
+    >
+  </div>
+
+  <div class="flex-1 p-3 overflow-y-auto sm:p-4">
+    @if (issueService.loading()) {
+      <div
+        class="flex flex-col items-center justify-center py-6 px-3 text-center text-gray-500 sm:py-8 sm:px-4"
+      >
+        <p class="text-sm font-medium m-0 mb-2 sm:text-base">
+          Loading issues...
+        </p>
+      </div>
+    } @else if (issueService.unassignedIssues().length === 0) {
+      <div
+        class="flex flex-col items-center justify-center py-6 px-3 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-lg bg-white sm:py-8 sm:px-4"
+      >
+        <p class="text-sm font-medium m-0 mb-2 sm:text-base">
+          No unassigned issues
+        </p>
+        <small class="text-xs opacity-80 sm:text-sm"
+          >All issues have been assigned to user steps</small
+        >
+      </div>
+    } @else {
+      @for (issue of issueService.unassignedIssues(); track issue.id) {
+        <app-issue-card [issue]="issue" />
+      }
+    }
+  </div>
+</div>

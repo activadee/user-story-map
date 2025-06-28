@@ -1,0 +1,108 @@
+<div
+  class="group bg-white border border-gray-200 rounded-md p-3 cursor-move transition-all duration-200 min-w-[200px] sm:min-w-[250px]"
+  [class.hover:shadow-md]="!isDragOver()"
+  [class.hover:border-gray-400]="!isDragOver()"
+  [class.border-l-4]="hasAssignedIssues()"
+  [class.border-l-green-500]="hasAssignedIssues()"
+  [class.border-primary-500]="isDragOver() || (canDrop() && !isDragOver())"
+  [class.border-2]="canDrop()"
+  [class.bg-blue-50]="isDragOver()"
+  [class.shadow-lg]="isDragOver()"
+  [class.scale-[1.02]]="isDragOver()"
+  [class.ring-2]="isDragOver()"
+  [class.ring-primary-500]="isDragOver()"
+  [class.ring-opacity-20]="isDragOver()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave()"
+  (drop)="onDrop($event)"
+>
+  <div class="flex justify-between items-start mb-2">
+    <h4
+      class="text-xs font-medium text-gray-800 flex-1 leading-tight mr-2 m-0 sm:text-sm"
+      [title]="step().description || step().title"
+    >
+      {{ step().title }}
+    </h4>
+    <div
+      class="flex gap-1 ml-2 opacity-60 transition-opacity duration-200 group-hover:opacity-100"
+    >
+      <button
+        class="bg-transparent border-0 p-1 rounded cursor-pointer text-gray-500 transition-colors duration-200 flex items-center justify-center min-w-[28px] min-h-[28px] text-xs hover:bg-gray-50 hover:text-gray-600 sm:min-w-[24px] sm:min-h-[24px]"
+        (click)="editStep()"
+        title="Edit Step"
+        type="button"
+      >
+        ✏️
+      </button>
+      <button
+        class="bg-transparent border-0 p-1 rounded cursor-pointer text-gray-500 transition-colors duration-200 flex items-center justify-center min-w-[28px] min-h-[28px] text-xs hover:bg-red-50 hover:text-red-500 sm:min-w-[24px] sm:min-h-[24px]"
+        (click)="onDeleteStep()"
+        title="Delete Step"
+        type="button"
+      >
+        🗑️
+      </button>
+    </div>
+  </div>
+
+  @if (step().description) {
+    <p class="text-xs text-gray-500 leading-normal m-0 mb-2">
+      {{ step().description }}
+    </p>
+  }
+
+  @if (hasAssignedIssues()) {
+    <div class="mt-2 pt-2 border-t border-gray-50">
+      <div class="mb-2">
+        <span class="text-xs text-green-500 font-medium">
+          📌 {{ assignedIssues().length }} issue(s)
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        @for (issue of assignedIssues(); track issue.id) {
+          <div
+            class="flex justify-between items-center py-1 px-2 bg-gray-50 rounded text-xs"
+          >
+            <span
+              class="flex-1 text-gray-600 truncate mr-1"
+              [title]="issue.description"
+            >
+              #{{ issue.gitlabId }} {{ issue.title }}
+            </span>
+            <button
+              class="bg-transparent border-0 text-gray-500 cursor-pointer py-1 px-1 rounded-sm text-xs ml-1 hover:bg-gray-200 hover:text-red-500 min-w-[20px] min-h-[20px] flex items-center justify-center"
+              (click)="onUnassignIssue(issue.id)"
+              title="Unassign Issue"
+              type="button"
+            >
+              ✕
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div
+      class="mt-2 py-2 rounded text-center sm:py-3"
+      [class.border-2]="canDrop()"
+      [class.border-dashed]="canDrop()"
+      [class.border-primary-500]="canDrop() && isDragOver()"
+      [class.border-gray-300]="canDrop() && !isDragOver()"
+      [class.bg-blue-50]="canDrop() && isDragOver()"
+      [class.bg-gray-50]="canDrop() && !isDragOver()"
+      [class.animate-pulse]="canDrop() && isDragOver()"
+    >
+      @if (canDrop()) {
+        <p class="text-xs font-medium text-primary-500 m-0">
+          Drop issue here to assign
+        </p>
+      } @else {
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-base opacity-60 sm:text-lg">📝</span>
+          <p class="text-xs text-gray-500 italic m-0">No issues assigned</p>
+        </div>
+      }
+    </div>
+  }
+</div>

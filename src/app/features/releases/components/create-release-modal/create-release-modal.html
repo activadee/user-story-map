@@ -1,0 +1,104 @@
+<app-modal
+  id="create-release"
+  title="Create New Release"
+  (closeModal)="onCancel()"
+>
+  <form (ngSubmit)="onSubmit()">
+    <div class="mb-3 sm:mb-4">
+      <label
+        for="releaseName"
+        class="block mb-2 font-medium text-gray-600 text-sm sm:text-base"
+      >
+        Release Name *
+      </label>
+      <input
+        id="releaseName"
+        type="text"
+        [(ngModel)]="formData().name"
+        (ngModelChange)="updateName($event)"
+        name="releaseName"
+        maxlength="100"
+        placeholder="e.g., Release Q3 2025"
+        class="w-full py-2 px-3 border border-gray-200 rounded-md text-sm focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/25 placeholder:text-gray-500 sm:py-3 sm:px-4 sm:text-base sm:focus:ring-4"
+      />
+    </div>
+
+    <div class="mb-3 sm:mb-4">
+      <label
+        for="releaseDescription"
+        class="block mb-2 font-medium text-gray-600 text-sm sm:text-base"
+      >
+        Description
+      </label>
+      <textarea
+        id="releaseDescription"
+        [(ngModel)]="formData().description"
+        (ngModelChange)="updateDescription($event)"
+        name="releaseDescription"
+        maxlength="500"
+        placeholder="Describe this release..."
+        rows="3"
+        class="w-full py-2 px-3 border border-gray-200 rounded-md text-sm resize-y min-h-[60px] focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/25 placeholder:text-gray-500 sm:py-3 sm:px-4 sm:text-base sm:min-h-[80px] sm:focus:ring-4"
+      >
+      </textarea>
+    </div>
+
+    <div class="mb-4">
+      <span class="block mb-2 font-medium text-gray-600">
+        Assign Issues (from User Steps)
+      </span>
+      <div
+        class="border border-gray-200 rounded-md max-h-[200px] overflow-y-auto"
+      >
+        @if (availableIssues().length === 0) {
+          <p class="p-4 text-center text-gray-500 italic m-0">
+            No issues available for assignment. Issues must first be assigned to
+            User Steps.
+          </p>
+        } @else {
+          <div>
+            @for (issue of availableIssues(); track issue.id) {
+              <label
+                class="flex items-start gap-3 py-3 px-3 border-b border-gray-50 cursor-pointer transition-all duration-200 hover:bg-gray-50 last:border-b-0"
+              >
+                <input
+                  type="checkbox"
+                  [checked]="isIssueSelected(issue.id)"
+                  (change)="toggleIssueSelection(issue.id)"
+                  class="m-0 w-auto flex-shrink-0"
+                />
+                <span class="flex-1 flex flex-col gap-1">
+                  <strong class="text-primary-500 text-sm">
+                    #{{ issue.gitlabId }} {{ issue.title }}
+                  </strong>
+                  <small class="text-gray-500 text-sm leading-tight">
+                    {{ issue.description }}
+                  </small>
+                </span>
+              </label>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col gap-2 mt-4 sm:flex-row sm:gap-3 sm:justify-end sm:mt-6"
+    >
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="btn btn-secondary order-2 sm:order-1"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="!isFormValid()"
+        class="btn btn-primary order-1 sm:order-2"
+      >
+        Create Release
+      </button>
+    </div>
+  </form>
+</app-modal>

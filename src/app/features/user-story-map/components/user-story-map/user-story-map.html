@@ -1,0 +1,63 @@
+<div class="container py-6 sm:py-8">
+  <app-user-story-map-header
+    [loading]="journeyService.loading()"
+    (createJourney)="onCreateJourney()"
+    (importData)="onImportData()"
+    (exportData)="onExportData()"
+  />
+
+  @if (journeyService.loading()) {
+    <div
+      class="flex flex-col items-center justify-center py-12 text-gray-500 sm:py-16"
+    >
+      <div
+        class="w-8 h-8 border-4 border-gray-200 border-t-primary-500 rounded-full animate-spin mb-3 sm:w-10 sm:h-10 sm:mb-4"
+      ></div>
+      <p class="text-sm m-0 sm:text-base">Loading User Story Map...</p>
+    </div>
+  } @else {
+    <div class="flex flex-col gap-4 md:flex-row md:gap-6 mt-4 sm:mt-6">
+      <app-issue-list
+        class="h-[400px] md:h-[calc(100vh-280px)] md:flex-shrink-0"
+      />
+
+      <div
+        class="flex gap-4 overflow-x-auto flex-1 min-h-[400px] md:gap-6 md:h-[calc(100vh-280px)] scrollbar-thin"
+      >
+        @if (journeyService.journeys().length === 0) {
+          <div class="flex-1 flex justify-center items-center px-4">
+            <app-empty-state
+              title="No User Journeys Yet"
+              message="Create your first User Journey to get started with your story map"
+              actionText="Create Journey"
+              (createAction)="showCreateJourneyDialog()"
+            />
+          </div>
+        } @else {
+          @for (journey of journeyService.sortedJourneys(); track journey.id) {
+            <app-user-journey-column
+              class="h-full"
+              [journey]="journey"
+              [steps]="stepsByJourney()[journey.id] || []"
+              [loading]="stepService.loading()"
+              (updateJourney)="onUpdateJourney($event)"
+              (deleteJourney)="onDeleteJourney($event)"
+              (createStep)="onCreateStep($event)"
+              (updateStep)="onUpdateStep($event)"
+              (deleteStep)="onDeleteStep($event)"
+              (reorderSteps)="onReorderSteps($event)"
+            />
+          }
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Create Journey Modal -->
+  @if (showCreateDialog()) {
+    <app-create-journey-modal
+      (submitJourney)="submitCreate($event)"
+      (cancelModal)="cancelCreate()"
+    />
+  }
+</div>
