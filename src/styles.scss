@@ -129,15 +129,6 @@ select {
 
 /* Ensure minimum touch targets on mobile */
 @media (max-width: 768px) {
-  button,
-  input,
-  select,
-  textarea,
-  .btn {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
   /* Prevent zoom on form inputs */
   input,
   textarea,
