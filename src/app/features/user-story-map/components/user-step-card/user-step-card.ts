@@ -85,6 +85,21 @@ export class UserStepCard {
     this.dragDropService.setDropTarget(null);
   }
 
+  protected async onMobileDrop(event: Event): Promise<void> {
+    const customEvent = event as CustomEvent;
+    const issueId = customEvent.detail.issueId;
+    if (issueId && this.canDrop()) {
+      try {
+        await this.issueService.assignIssueToStep(issueId, this.step().id);
+        this.dragDropService.endDrag();
+      } catch (error) {
+        console.error('Failed to assign issue:', error);
+        this.dragDropService.endDrag();
+      }
+    }
+    this.dragDropService.setDropTarget(null);
+  }
+
   protected async onUnassignIssue(issueId: string): Promise<void> {
     try {
       await this.issueService.unassignIssue(issueId);

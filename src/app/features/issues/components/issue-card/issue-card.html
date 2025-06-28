@@ -14,6 +14,9 @@
   draggable="true"
   (dragstart)="onDragStart($event)"
   (dragend)="onDragEnd()"
+  (touchstart)="onTouchStart($event)"
+  (touchmove)="onTouchMove($event)"
+  (touchend)="onTouchEnd($event)"
 >
   <div class="flex justify-between items-center mb-2">
     <span class="font-semibold text-primary-500 text-xs sm:text-sm"
