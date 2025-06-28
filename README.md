@@ -32,6 +32,15 @@ This application enables management of user journeys and user steps, assignment 
 - **Tabular View**: Overview of all releases with assigned issues
 - **Persistent Storage**: Release information stored in IndexedDB
 
+### 📦 Import/Export
+
+- **JSON Export**: Export complete user story map as JSON file
+- **JSON Import**: Import user story map from JSON file
+- **Import Strategies**: Merge, replace, or append data
+- **Conflict Resolution**: Skip, overwrite, or rename conflicting items
+- **Schema Validation**: Comprehensive validation with reference integrity checks
+- **Error Handling**: Detailed error messages and warnings for import issues
+
 ## 🛠️ Technology Stack
 
 - **Framework**: Angular 20
@@ -135,6 +144,7 @@ src/
 │   │   ├── models/             # TypeScript Interfaces
 │   │   └── services/           # Database Service
 │   ├── features/               # Feature Modules
+│   │   ├── import-export/     # Import/Export Functionality
 │   │   ├── issues/            # Issue Management
 │   │   ├── releases/          # Release Planning
 │   │   └── user-story-map/    # Story Map Components
@@ -163,6 +173,23 @@ src/
 2. Create new release
 3. Assign issues from user steps to releases
 4. View tabular overview of all releases
+
+### 4. Import/Export Data
+
+#### Export
+
+1. Click "Export" button in the user story map header
+2. Choose download location for the JSON file
+3. File contains complete snapshot of your story map
+
+#### Import
+
+1. Click "Import" button in the user story map header
+2. Configure import settings:
+   - **Strategy**: Merge, Replace, or Append data
+   - **Conflict Resolution**: Skip, Overwrite, or Rename conflicts
+3. Select JSON file to import
+4. Review import results and any warnings
 
 ## 🎨 Design Principles
 

@@ -13,6 +13,8 @@ import { EmptyState } from '@app/shared/components/empty-state/empty-state';
 import { UserStoryMapHeader } from '../user-story-map-header/user-story-map-header';
 import { IssueList } from '@app/features/issues/components/issue-list/issue-list';
 import { CreateJourneyModal } from '../create-journey-modal/create-journey-modal';
+import { ImportExportModal } from '@app/features/import-export/components/import-export-modal/import-export-modal';
+import { ModalService } from '@app/shared/services/modal.service';
 
 @Component({
   selector: 'app-user-story-map',
@@ -22,6 +24,7 @@ import { CreateJourneyModal } from '../create-journey-modal/create-journey-modal
     UserStoryMapHeader,
     IssueList,
     CreateJourneyModal,
+    ImportExportModal,
   ],
   templateUrl: './user-story-map.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +33,7 @@ export class UserStoryMap {
   protected readonly journeyService = inject(UserJourneyService);
   protected readonly stepService = inject(UserStepService);
   protected readonly issueService = inject(IssueService);
+  protected readonly modalService = inject(ModalService);
 
   protected readonly stepsByJourney = this.stepService.stepsByJourney;
   protected readonly showCreateDialog = signal(false);
@@ -145,10 +149,18 @@ export class UserStoryMap {
   }
 
   protected onImportData(): void {
-    // TODO: Implement import functionality
+    this.modalService.open({
+      id: 'import-export',
+      title: 'Import/Export User Story Map',
+      size: 'lg',
+    });
   }
 
   protected onExportData(): void {
-    // TODO: Implement export functionality
+    this.modalService.open({
+      id: 'import-export',
+      title: 'Import/Export User Story Map',
+      size: 'lg',
+    });
   }
 }
