@@ -24,5 +24,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
+  protected readonly currentYear = new Date().getFullYear();
   protected readonly title = 'User Story Map';
 }
