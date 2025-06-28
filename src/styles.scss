@@ -116,3 +116,33 @@ body {
 .scrollbar-overlay {
   overflow: overlay;
 }
+
+/* Prevent zoom on iOS input focus */
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+/* Ensure minimum touch targets on mobile */
+@media (max-width: 768px) {
+  button,
+  input,
+  select,
+  textarea,
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent zoom on form inputs */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    transform-origin: left top;
+  }
+}
