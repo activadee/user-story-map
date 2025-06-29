@@ -1,3 +1,4 @@
+import { DatePipe, CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,13 +6,12 @@ import {
   inject,
   input,
 } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { Issue } from '@app/core/models';
 import { DragDropService } from '@app/shared/services/drag-drop.service';
 
 @Component({
   selector: 'app-issue-card',
-  imports: [DatePipe],
+  imports: [DatePipe, CommonModule],
   templateUrl: './issue-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
