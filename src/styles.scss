@@ -32,9 +32,11 @@
 
   /* Red colors for error states */
   --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
   --color-red-200: #fecaca;
   --color-red-400: #f87171;
   --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
 
   /* Scrollbar colors */
   --scrollbar-thumb: rgba(156, 163, 175, 0.5);
@@ -81,10 +83,12 @@
   --color-green-800: #bbf7d0;
 
   /* Red colors for dark mode */
-  --color-red-50: #450a0a;
-  --color-red-200: #991b1b;
+  --color-red-50: #7f1d1d;
+  --color-red-100: #991b1b;
+  --color-red-200: #dc2626;
   --color-red-400: #f87171;
-  --color-red-800: #fecaca;
+  --color-red-800: #fca5a5;
+  --color-red-900: #fee2e2;
 
   /* Scrollbar colors for dark mode */
   --scrollbar-thumb: rgba(161, 161, 170, 0.5);
