@@ -14,7 +14,7 @@
       <button
         (click)="exportData()"
         [disabled]="isExporting()"
-        class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        class="btn btn-primary w-full"
       >
         @if (isExporting()) {
           <span class="flex items-center justify-center">
@@ -145,7 +145,7 @@
         <button
           (click)="importData()"
           [disabled]="isImporting()"
-          class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          class="btn btn-primary w-full"
         >
           @if (isImporting()) {
             <span class="flex items-center justify-center">
