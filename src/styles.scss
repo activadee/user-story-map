@@ -1,15 +1,25 @@
 @use "tailwindcss";
 
 @theme {
+  --color-primary-50: #eff6ff;
   --color-primary-500: #0d6efd;
   --color-primary-600: #0b5ed7;
 
   --color-gray-50: #f8f9fa;
   --color-gray-100: #e9ecef;
   --color-gray-200: #dee2e6;
+  --color-gray-300: #ced4da;
+  --color-gray-400: #adb5bd;
   --color-gray-500: #6c757d;
   --color-gray-600: #495057;
+  --color-gray-700: #343a40;
   --color-gray-800: #212529;
+
+  --color-white: #ffffff;
+
+  /* Scrollbar colors */
+  --scrollbar-thumb: rgba(156, 163, 175, 0.5);
+  --scrollbar-thumb-hover: rgba(107, 114, 128, 0.7);
 
   --spacing-touch: 44px;
 
@@ -19,6 +29,32 @@
   --breakpoint-xl: 1440px;
 
   --scale-102: 1.02;
+}
+
+/* Dark mode theme overrides */
+:root.dark {
+  --color-primary-50: #1e3a8a;
+  --color-primary-500: #4c8bf5;
+  --color-primary-600: #3776e8;
+
+  --color-gray-50: #1a1a1a;
+  --color-gray-100: #2d2d2d;
+  --color-gray-200: #404040;
+  --color-gray-500: #a1a1aa;
+  --color-gray-600: #d4d4d8;
+  --color-gray-700: #e4e4e7;
+  --color-gray-800: #f4f4f5;
+
+  /* Semantic colors for white/light backgrounds become dark */
+  --color-white: #2d2d2d;
+
+  /* Scrollbar colors for dark mode */
+  --scrollbar-thumb: rgba(161, 161, 170, 0.5);
+  --scrollbar-thumb-hover: rgba(212, 212, 216, 0.7);
+
+  /* Additional grays for better contrast */
+  --color-gray-300: #525252;
+  --color-gray-400: #737373;
 }
 
 html {
@@ -34,6 +70,11 @@ body {
     Roboto,
     sans-serif;
   line-height: 1.5;
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-800);
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 .btn {
@@ -90,7 +131,7 @@ body {
 
 .scrollbar-overlay {
   scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 .scrollbar-overlay::-webkit-scrollbar {
@@ -102,14 +143,14 @@ body {
 }
 
 .scrollbar-overlay::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.5);
+  background: var(--scrollbar-thumb);
   border-radius: 6px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 .scrollbar-overlay::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.7);
+  background: var(--scrollbar-thumb-hover);
   background-clip: content-box;
 }
 

@@ -55,7 +55,7 @@
         </div>
       } @else {
         <div
-          class="flex gap-4 overflow-x-auto flex-1 min-h-[400px] md:gap-6 md:h-[calc(100vh-280px)] min-w-0 w-full"
+          class="flex gap-4 overflow-x-auto scrollbar-overlay flex-1 min-h-[400px] md:gap-6 md:h-[calc(100vh-280px)] min-w-0 w-full"
         >
           @for (journey of journeyService.sortedJourneys(); track journey.id) {
             <app-user-journey-column

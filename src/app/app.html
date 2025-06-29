@@ -6,21 +6,24 @@
       <h1 class="text-xl font-semibold text-gray-800 m-0 sm:text-2xl">
         {{ title }}
       </h1>
-      <nav class="flex flex-col gap-2 sm:flex-row sm:gap-4">
-        <a
-          routerLink="/"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="py-2 px-4 no-underline text-gray-500 rounded-md transition-colors duration-200 hover:text-gray-600 hover:bg-gray-200 text-center sm:text-left [&.active]:text-primary-500 [&.active]:bg-blue-50"
-          >Story Map</a
-        >
-        <a
-          routerLink="/releases"
-          routerLinkActive="active"
-          class="py-2 px-4 no-underline text-gray-500 rounded-md transition-colors duration-200 hover:text-gray-600 hover:bg-gray-200 text-center sm:text-left [&.active]:text-primary-500 [&.active]:bg-blue-50"
-          >Releases</a
-        >
-      </nav>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <nav class="flex flex-col gap-2 sm:flex-row sm:gap-4">
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="py-2 px-4 no-underline text-gray-500 rounded-md transition-colors duration-200 hover:text-gray-600 hover:bg-gray-200 text-center sm:text-left [&.active]:text-primary-500 [&.active]:bg-primary-50"
+            >Story Map</a
+          >
+          <a
+            routerLink="/releases"
+            routerLinkActive="active"
+            class="py-2 px-4 no-underline text-gray-500 rounded-md transition-colors duration-200 hover:text-gray-600 hover:bg-gray-200 text-center sm:text-left [&.active]:text-primary-500 [&.active]:bg-primary-50"
+            >Releases</a
+          >
+        </nav>
+        <app-theme-toggle />
+      </div>
     </div>
   </div>
 </header>
