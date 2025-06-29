@@ -148,15 +148,7 @@ export class UserStoryMap {
     }
   }
 
-  protected onImportData(): void {
-    this.modalService.open({
-      id: 'import-export',
-      title: 'Import/Export User Story Map',
-      size: 'lg',
-    });
-  }
-
-  protected onExportData(): void {
+  protected onImportExport(): void {
     this.modalService.open({
       id: 'import-export',
       title: 'Import/Export User Story Map',

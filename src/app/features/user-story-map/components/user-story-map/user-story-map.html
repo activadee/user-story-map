@@ -2,8 +2,7 @@
   <app-user-story-map-header
     [loading]="journeyService.loading()"
     (createJourney)="onCreateJourney()"
-    (importData)="onImportData()"
-    (exportData)="onExportData()"
+    (importExport)="onImportExport()"
   />
 
   @if (journeyService.loading()) {

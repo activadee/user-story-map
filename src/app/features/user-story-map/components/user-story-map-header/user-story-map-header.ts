@@ -16,17 +16,10 @@ import { PageHeader } from '../../../../shared/components/page-header/page-heade
     >
       <button
         class="btn btn-secondary"
-        (click)="importData.emit()"
+        (click)="importExport.emit()"
         [disabled]="loading()"
       >
-        📁 Import
-      </button>
-      <button
-        class="btn btn-secondary"
-        (click)="exportData.emit()"
-        [disabled]="loading()"
-      >
-        📤 Export
+        📂 Import/Export
       </button>
       <button
         class="btn btn-primary"
@@ -43,6 +36,5 @@ export class UserStoryMapHeader {
   readonly loading = input<boolean>(false);
 
   readonly createJourney = output<void>();
-  readonly importData = output<void>();
-  readonly exportData = output<void>();
+  readonly importExport = output<void>();
 }
