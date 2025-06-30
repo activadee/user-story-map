@@ -48,7 +48,7 @@
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@tailwindcss/postcss": "^4.1.11",
-    "css-select": "^5.2.2",
+    "css-select": "^6.0.0",
     "drag-drop-touch": "^1.3.1",
     "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
